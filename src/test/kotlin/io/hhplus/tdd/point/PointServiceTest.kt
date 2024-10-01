@@ -2,12 +2,12 @@ package io.hhplus.tdd.point
 
 import io.hhplus.tdd.infra.database.PointHistoryTable
 import io.hhplus.tdd.infra.database.UserPointTable
-import io.hhplus.tdd.domain.BusinessException
+import io.hhplus.tdd.application.common.BusinessException
 import io.hhplus.tdd.domain.model.Constants
 import io.hhplus.tdd.domain.model.PointHistory
 import io.hhplus.tdd.domain.model.TransactionType
 import io.hhplus.tdd.domain.model.UserPoint
-import io.hhplus.tdd.domain.service.PointService
+import io.hhplus.tdd.application.service.PointService
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

@@ -2,10 +2,10 @@ package io.hhplus.tdd.interfaces.controller
 
 import io.hhplus.tdd.infra.database.PointHistoryTable
 import io.hhplus.tdd.infra.database.UserPointTable
-import io.hhplus.tdd.domain.model.PointHistory
-import io.hhplus.tdd.domain.model.TransactionType
-import io.hhplus.tdd.domain.service.PointService
-import io.hhplus.tdd.domain.model.UserPoint
+import io.hhplus.tdd.domain.point.PointHistory
+import io.hhplus.tdd.domain.point.TransactionType
+import io.hhplus.tdd.application.service.PointService
+import io.hhplus.tdd.domain.point.UserPoint
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.*
