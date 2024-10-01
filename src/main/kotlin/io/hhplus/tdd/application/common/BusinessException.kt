@@ -1,4 +1,4 @@
-package io.hhplus.tdd.domain
+package io.hhplus.tdd.application.common
 
 import org.springframework.http.HttpStatus
 

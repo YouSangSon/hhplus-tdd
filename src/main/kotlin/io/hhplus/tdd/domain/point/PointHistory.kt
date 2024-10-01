@@ -1,4 +1,4 @@
-package io.hhplus.tdd.domain.model
+package io.hhplus.tdd.domain.point
 
 data class PointHistory(
     val id: Long,

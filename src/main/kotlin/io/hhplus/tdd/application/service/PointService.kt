@@ -1,12 +1,11 @@
-package io.hhplus.tdd.domain.service
+package io.hhplus.tdd.application.service
 
+import io.hhplus.tdd.application.common.BusinessException
+import io.hhplus.tdd.domain.point.PointHistory
+import io.hhplus.tdd.domain.point.TransactionType
+import io.hhplus.tdd.domain.point.UserPoint
 import io.hhplus.tdd.infra.database.PointHistoryTable
 import io.hhplus.tdd.infra.database.UserPointTable
-import io.hhplus.tdd.domain.BusinessException
-import io.hhplus.tdd.domain.model.Constants
-import io.hhplus.tdd.domain.model.PointHistory
-import io.hhplus.tdd.domain.model.TransactionType
-import io.hhplus.tdd.domain.model.UserPoint
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import java.util.concurrent.ConcurrentHashMap
@@ -27,14 +26,6 @@ class PointService(
             val userPoint = userPointTable.selectById(id)
             val updatedUserPoint = userPoint.charge(amount, System.currentTimeMillis())
 
-            if (updatedUserPoint.isNegative()) {
-                throw BusinessException("400", "Point cannot be negative", HttpStatus.BAD_REQUEST)
-            }
-
-            if (updatedUserPoint.isExceedMaxPoints()) {
-                throw BusinessException("400", "Point cannot exceed ${Constants.MAX_POINTS}", HttpStatus.BAD_REQUEST)
-            }
-
             userPointTable.insertOrUpdate(id, updatedUserPoint.point)
             pointHistoryTable.insert(id, updatedUserPoint.point, transactionType, System.currentTimeMillis())
 
@@ -52,10 +43,6 @@ class PointService(
         try {
             val userPoint = userPointTable.selectById(id)
             val updatedUserPoint = userPoint.use(amount, System.currentTimeMillis())
-
-            if (updatedUserPoint.isNegative()) {
-                throw BusinessException("400", "Point cannot be negative", HttpStatus.BAD_REQUEST)
-            }
 
             userPointTable.insertOrUpdate(id, updatedUserPoint.point)
             pointHistoryTable.insert(id, updatedUserPoint.point, transactionType, System.currentTimeMillis())

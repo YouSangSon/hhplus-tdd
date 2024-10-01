@@ -1,6 +1,5 @@
 package io.hhplus.tdd
 
-import io.hhplus.tdd.domain.BusinessException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
@@ -23,11 +22,11 @@ class ApiControllerAdvice : ResponseEntityExceptionHandler() {
         )
     }
 
-    @ExceptionHandler(BusinessException::class)
-    fun handleBusinessException(e: BusinessException): ResponseEntity<ErrorResponse> {
-        return ResponseEntity(
-            ErrorResponse(e.code, e.message),
-            e.status
-        )
-    }
+//    @ExceptionHandler(BusinessException::class)
+//    fun handleBusinessException(e: BusinessException): ResponseEntity<ErrorResponse> {
+//        return ResponseEntity(
+//            ErrorResponse(e.code, e.message),
+//            e.status
+//        )
+//    }
 }
