@@ -1,7 +1,11 @@
-package io.hhplus.tdd.point
+package io.hhplus.tdd.interfaces.controller
 
-import io.hhplus.tdd.database.PointHistoryTable
-import io.hhplus.tdd.database.UserPointTable
+import io.hhplus.tdd.infra.database.PointHistoryTable
+import io.hhplus.tdd.infra.database.UserPointTable
+import io.hhplus.tdd.domain.model.PointHistory
+import io.hhplus.tdd.domain.model.TransactionType
+import io.hhplus.tdd.domain.service.PointService
+import io.hhplus.tdd.domain.model.UserPoint
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.*
@@ -21,7 +25,7 @@ class PointController {
     fun point(
         @PathVariable id: Long,
     ): UserPoint {
-        return pointService.getUserPoint(id)
+        return pointService.get(id)
     }
 
     /**
@@ -31,28 +35,28 @@ class PointController {
     fun history(
         @PathVariable id: Long,
     ): List<PointHistory> {
-        return pointService.getUserPointHistories(id)
+        return pointService.getHistories(id)
     }
 
     /**
      * TODO - 특정 유저의 포인트를 충전하는 기능을 작성해주세요.
      */
     @PatchMapping("{id}/charge")
-    fun charge(
+    suspend fun charge(
         @PathVariable id: Long,
         @RequestBody amount: Long,
     ): UserPoint {
-        return pointService.useOrChargeUserPoint(id, amount, TransactionType.CHARGE)
+        return pointService.charge(id, amount, TransactionType.CHARGE)
     }
 
     /**
      * TODO - 특정 유저의 포인트를 사용하는 기능을 작성해주세요.
      */
     @PatchMapping("{id}/use")
-    fun use(
+    suspend fun use(
         @PathVariable id: Long,
         @RequestBody amount: Long,
     ): UserPoint {
-        return pointService.useOrChargeUserPoint(id, amount, TransactionType.USE)
+        return pointService.use(id, amount, TransactionType.USE)
     }
 }
