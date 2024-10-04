@@ -1,2 +1,16 @@
 spring:
   application.name: hhplus-tdd
+  datasource:
+    url: jdbc:postgresql://localhost:5432/your_database
+    username: your_username
+    password: your_password
+    driver-class-name: org.postgresql.Driver
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: none # JdbcTemplate에서는 자동 테이블 생성을 지원하지 않음
+  jdbc:
+    template:
+      query-timeout: 30 # 쿼리 타임아웃을 설정
