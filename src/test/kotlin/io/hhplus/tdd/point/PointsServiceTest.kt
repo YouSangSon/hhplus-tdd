@@ -1,29 +1,29 @@
 package io.hhplus.tdd.point
 
-import io.hhplus.tdd.infra.database.PointHistoryTable
-import io.hhplus.tdd.infra.database.UserPointTable
+import io.hhplus.tdd.infrastructure.points.PointHistoryTable
+import io.hhplus.tdd.infrastructure.points.UserPointTable
 import io.hhplus.tdd.application.common.BusinessException
-import io.hhplus.tdd.domain.model.Constants
-import io.hhplus.tdd.domain.model.PointHistory
-import io.hhplus.tdd.domain.model.TransactionType
-import io.hhplus.tdd.domain.model.UserPoint
-import io.hhplus.tdd.application.service.PointService
+import io.hhplus.tdd.domain.models.Constants
+import io.hhplus.tdd.domain.points.PointsService
+import io.hhplus.tdd.domain.points.PointHistory
+import io.hhplus.tdd.domain.points.TransactionType
+import io.hhplus.tdd.domain.points.UserPoint
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito.*
 
-class PointServiceTest {
+class PointsServiceTest {
     private lateinit var userPointTable: UserPointTable
     private lateinit var pointHistoryTable: PointHistoryTable
-    private lateinit var pointService: PointService
+    private lateinit var pointsService: PointsService
 
     @BeforeEach
     fun setUp() {
         userPointTable = mock(UserPointTable::class.java)
         pointHistoryTable = mock(PointHistoryTable::class.java)
-        pointService = PointService(userPointTable, pointHistoryTable)
+        pointsService = PointsService(userPointTable, pointHistoryTable)
     }
 
     @Test
@@ -33,7 +33,7 @@ class PointServiceTest {
 
         `when`(userPointTable.selectById(userId)).thenReturn(expectedUserPoint)
 
-        val result = pointService.get(userId)
+        val result = pointsService.get(userId)
 
         assertEquals(expectedUserPoint, result)
         verify(userPointTable).selectById(userId)
@@ -49,7 +49,7 @@ class PointServiceTest {
 
         `when`(pointHistoryTable.selectAllByUserId(userId)).thenReturn(expectedHistories)
 
-        val result = pointService.getHistories(userId)
+        val result = pointsService.getHistories(userId)
 
         assertEquals(expectedHistories, result)
         verify(pointHistoryTable).selectAllByUserId(userId)
@@ -65,7 +65,7 @@ class PointServiceTest {
 
         `when`(userPointTable.selectById(userId)).thenReturn(userPoint)
 
-        val result = pointService.charge(userId, chargeAmount, TransactionType.CHARGE)
+        val result = pointsService.charge(userId, chargeAmount, TransactionType.CHARGE)
 
         assertEquals(initialPoint + chargeAmount, result.point)
     }
@@ -80,7 +80,7 @@ class PointServiceTest {
         `when`(userPointTable.selectById(userId)).thenReturn(userPoint)
 
         val exception = assertThrows<BusinessException> {
-            pointService.charge(userId, chargeAmount, TransactionType.CHARGE)
+            pointsService.charge(userId, chargeAmount, TransactionType.CHARGE)
         }
 
         assertEquals("400", exception.code)
@@ -97,7 +97,7 @@ class PointServiceTest {
         `when`(userPointTable.selectById(userId)).thenReturn(userPoint)
 
         val exception = assertThrows<BusinessException> {
-            pointService.charge(userId, chargeAmount, TransactionType.CHARGE)
+            pointsService.charge(userId, chargeAmount, TransactionType.CHARGE)
         }
 
         assertEquals("400", exception.code)
@@ -114,7 +114,7 @@ class PointServiceTest {
 
         `when`(userPointTable.selectById(userId)).thenReturn(userPoint)
 
-        val result = pointService.use(userId, useAmount, TransactionType.USE)
+        val result = pointsService.use(userId, useAmount, TransactionType.USE)
 
         assertEquals(initialPoint - useAmount, result.point)
     }
@@ -129,7 +129,7 @@ class PointServiceTest {
         `when`(userPointTable.selectById(userId)).thenReturn(userPoint)
 
         val exception = assertThrows<BusinessException> {
-            pointService.use(userId, useAmount, TransactionType.USE)
+            pointsService.use(userId, useAmount, TransactionType.USE)
         }
 
         assertEquals("400", exception.code)

@@ -1,6 +1,6 @@
-package io.hhplus.tdd.domain.point
+package io.hhplus.tdd.domain.points
 
-import io.hhplus.tdd.domain.model.Constants.MAX_POINTS
+import io.hhplus.tdd.domain.models.Constants.MAX_POINTS
 
 data class UserPoint(
     val id: Long,

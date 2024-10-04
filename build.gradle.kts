@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependency.management)
     id("jacoco")
+    kotlin("kapt")
 }
 
 allprojects {
@@ -19,6 +20,9 @@ dependencyManagement {
 }
 
 dependencies {
+    implementation("org.postgresql:postgresql")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("com.querydsl:querydsl-jpa")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation(libs.spring.boot.starter.web)
@@ -29,6 +33,8 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
     testImplementation("org.mockito:mockito-core")
     testImplementation("org.mockito.kotlin:mockito-kotlin")
+    testImplementation("com.h2database:h2")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 // about source and compilation
@@ -47,6 +53,12 @@ tasks.withType<KotlinCompile> {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
 }
+
+// Configure QueryDSL generated sources directory
+kotlin.sourceSets.main {
+    kotlin.srcDir("${layout.buildDirectory}/generated/source/kapt/main")
+}
+
 // bundling tasks
 tasks.getByName("bootJar") {
     enabled = true

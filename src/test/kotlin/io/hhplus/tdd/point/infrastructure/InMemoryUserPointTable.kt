@@ -1,7 +1,7 @@
-package io.hhplus.tdd.point.infra
+package io.hhplus.tdd.point.infrastructure
 
-import io.hhplus.tdd.infra.database.UserPointTable
-import io.hhplus.tdd.domain.model.UserPoint
+import io.hhplus.tdd.domain.points.UserPoint
+import io.hhplus.tdd.infrastructure.points.UserPointTable
 import org.springframework.stereotype.Component
 import java.util.concurrent.ConcurrentHashMap
 
