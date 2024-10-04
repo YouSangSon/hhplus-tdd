@@ -1,18 +1,13 @@
-package io.hhplus.tdd.application.service
+package io.hhplus.tdd.domain.points
 
-import io.hhplus.tdd.application.common.BusinessException
-import io.hhplus.tdd.domain.point.PointHistory
-import io.hhplus.tdd.domain.point.TransactionType
-import io.hhplus.tdd.domain.point.UserPoint
-import io.hhplus.tdd.infra.database.PointHistoryTable
-import io.hhplus.tdd.infra.database.UserPointTable
-import org.springframework.http.HttpStatus
+import io.hhplus.tdd.infrastructure.points.PointHistoryTable
+import io.hhplus.tdd.infrastructure.points.UserPointTable
 import org.springframework.stereotype.Service
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.locks.ReentrantLock
 
 @Service
-class PointService(
+class PointsService(
     private val userPointTable: UserPointTable, private val pointHistoryTable: PointHistoryTable
 ) {
     private val locks = ConcurrentHashMap<Long, ReentrantLock>()
